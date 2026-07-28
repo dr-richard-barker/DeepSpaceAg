@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Space Agriculture — plants & health beyond low Earth orbit</title>
+<meta name="description" content="Deep Space Agriculture — sustaining plants and people on long-duration missions: gas-transport modelling, radiation & stress-response decoding, crop physiology and astronaut health analytics. A focused selection from the COSE project family.">
+<link rel="icon" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-logo.png">
+<link rel="stylesheet" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/theme.css">
+<style>
+  /* Deep-space indigo accent (overrides the CoSE blue) */
+  :root{ --accent:#5b56d6; --accent2:#8a6cf0; }
+  @media (prefers-color-scheme: dark){ :root{ --accent:#8f8bf0; --accent2:#a99bf7; } }
+  header{background:linear-gradient(180deg,rgba(91,86,214,.14),transparent)}
+  .hubgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin:16px 0 2px}
+  .hubcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:16px 16px 14px;color:var(--fg);text-decoration:none;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+  .hubcard:hover{text-decoration:none;transform:translateY(-2px);
+    box-shadow:0 8px 22px rgba(0,0,0,.07);border-color:var(--accent)}
+  .hubcard .thumb{width:100%;aspect-ratio:16/9;border-radius:9px;display:block;margin:0 0 12px;object-fit:cover}
+  .hubcard h3{margin:0 0 6px;font-size:1.02rem;color:var(--fg);letter-spacing:-.01em}
+  .hubcard p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.45;flex:1}
+  .hubcard .go{color:var(--accent);font-weight:600;font-size:.82rem;margin-top:12px}
+  .subsec{margin:34px 0 0}
+  .subsec:first-of-type{margin-top:8px}
+  .subsec > h2{font-size:1.16rem;letter-spacing:-.01em;margin:0;display:flex;align-items:baseline;gap:10px}
+  .subsec > h2 .n{font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.02em}
+  .subsec > .blurb{margin:5px 0 0;color:var(--muted);font-size:.9rem;line-height:1.45}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Deep Space Agriculture · plants & people beyond LEO</p>
+    <h1>Deep Space Agriculture</h1>
+    <p class="lede">Sustaining crops and crew on long-duration missions — leaf gas transport under altered
+      gravity, radiation and stress-response decoding, crop physiology, and astronaut-health analytics.
+      A focused selection of projects from the wider
+      <a href="https://dr-richard-barker.github.io/CoSE_Cloud/Hub/">COSE</a> family.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://dr-richard-barker.github.io/LunarLeaf-CFD/">Lunar LEAF model →</a>
+      <a class="btn" href="https://dr-richard-barker.github.io/CoSE_Cloud/Hub/">All COSE projects</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap" id="hub"></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Deep Space Agriculture · part of the <a href="https://cosecloud.com/">COSE</a> project family ·
+    <a href="https://dr-richard-barker.github.io/CoSE_Cloud/Hub/">full project hub</a><br>
+    Richard Barker and collaborators.</p>
+  </div>
+</footer>
+
+<script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js"></script>
+<script>
+(function(){
+  // Cards grouped into sub-sections. Every id here is part of the
+  // deepspaceag scope (sites.js reg.scopes.deepspaceag) — 9 projects total.
+  var SECTIONS = [
+    { name:"Plant systems & crops", blurb:"Growth-chamber gas transport, radiation and crop physiology off Earth.",
+      ids:["LunarLeaf-CFD","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05"] },
+    { name:"Stress & biomarker decoders", blurb:"Machine-learning decoders of spaceflight and radiation stress signatures.",
+      ids:["deepspace-seed-stress-decoder","astronaut-oncogene-biomarkers"] },
+    { name:"Astronaut health", blurb:"Searchable evidence and trend analytics for crew health.",
+      ids:["Astronaut_health_search","Astronaut_trends"] },
+    { name:"Data & education", blurb:"Open OSDR data notebooks and training resources.",
+      ids:["OSDR_jupyter_book.io"] }
+  ];
+  var reg = window.BARKER_SITES, hub = document.getElementById("hub");
+  if(!reg || !reg.groups || !hub) return;
+  var byId = {};
+  reg.groups.forEach(function(g){ g.items.forEach(function(it){ byId[it.id] = it; }); });
+  function card(id){
+    var it = byId[id]; if(!it || !it.url) return null;
+    var a = document.createElement("a"); a.className = "hubcard"; a.href = it.url + (it.url.indexOf("?")>=0?"&":"?") + "cose_scope=deepspaceag";
+    var img = document.createElement("img"); img.className = "thumb"; img.alt = ""; img.loading = "lazy";
+    img.src = "https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/thumbs/" + id + ".svg?v=3";
+    img.onerror = function(){ img.remove(); };
+    a.appendChild(img);
+    var h = document.createElement("h3"); h.textContent = (it.emoji ? it.emoji + " " : "") + it.title; a.appendChild(h);
+    if(it.desc){ var p = document.createElement("p"); p.textContent = it.desc; a.appendChild(p); }
+    var go = document.createElement("span"); go.className = "go"; go.textContent = "Open →"; a.appendChild(go);
+    return a;
+  }
+  SECTIONS.forEach(function(sec){
+    var cards = sec.ids.map(card).filter(Boolean);
+    if(!cards.length) return;
+    var wrap = document.createElement("div"); wrap.className = "subsec";
+    var h = document.createElement("h2");
+    h.appendChild(document.createTextNode(sec.name));
+    var n = document.createElement("span"); n.className = "n"; n.textContent = cards.length + (cards.length===1?" project":" projects");
+    h.appendChild(n); wrap.appendChild(h);
+    if(sec.blurb){ var b = document.createElement("p"); b.className = "blurb"; b.textContent = sec.blurb; wrap.appendChild(b); }
+    var grid = document.createElement("div"); grid.className = "hubgrid";
+    cards.forEach(function(c){ grid.appendChild(c); });
+    wrap.appendChild(grid);
+    hub.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>
