@@ -60,25 +60,23 @@
 <script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js"></script>
 <script>
 (function(){
-  // Cards grouped into sub-sections. Every id here is part of the
-  // deepspaceag scope (sites.js reg.scopes.deepspaceag) — 9 projects total.
-  var SECTIONS = [
-    { name:"Plant systems & crops", blurb:"Growth-chamber gas transport, radiation, germination and crop physiology off Earth.",
-      ids:["LunarLeaf-CFD","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05","Seed_sowing_simulator"] },
-    { name:"Stress & biomarker decoders", blurb:"Machine-learning decoders of spaceflight and radiation stress signatures.",
-      ids:["deepspace-seed-stress-decoder","astronaut-oncogene-biomarkers"] },
-    { name:"Astronaut health", blurb:"Searchable evidence and trend analytics for crew health.",
-      ids:["Astronaut_health_search","Astronaut_trends"] },
-    { name:"Data & education", blurb:"Open OSDR data notebooks and training resources.",
-      ids:["OSDR_jupyter_book.io"] }
-  ];
+  // Sub-sections come from the shared registry scope
+  // (sites.js reg.scopes.deepspaceag.sections) — the single source of truth, so
+  // this hub and the in-page rail can never drift. Add/re-group a project in
+  // sites.js only.
+  var SCOPE = "deepspaceag";
   var reg = window.BARKER_SITES, hub = document.getElementById("hub");
   if(!reg || !reg.groups || !hub) return;
+  var scope = reg.scopes && reg.scopes[SCOPE];
+  // Prefer the registry's grouped sections; fall back to a single flat list from
+  // the scope ids so a briefly-cached older sites.js still renders (never blank).
+  var SECTIONS = (scope && scope.sections)
+    || (scope && scope.ids ? [{ name:"Projects", ids:scope.ids }] : []);
   var byId = {};
   reg.groups.forEach(function(g){ g.items.forEach(function(it){ byId[it.id] = it; }); });
   function card(id){
     var it = byId[id]; if(!it || !it.url) return null;
-    var a = document.createElement("a"); a.className = "hubcard"; a.href = it.url + (it.url.indexOf("?")>=0?"&":"?") + "cose_scope=deepspaceag";
+    var a = document.createElement("a"); a.className = "hubcard"; a.href = it.url + (it.url.indexOf("?")>=0?"&":"?") + "cose_scope=" + SCOPE;
     var img = document.createElement("img"); img.className = "thumb"; img.alt = ""; img.loading = "lazy";
     img.src = "https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/thumbs/" + id + ".svg?v=4";
     img.onerror = function(){ img.remove(); };
