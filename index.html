@@ -80,7 +80,7 @@
     var it = byId[id]; if(!it || !it.url) return null;
     var a = document.createElement("a"); a.className = "hubcard"; a.href = it.url + (it.url.indexOf("?")>=0?"&":"?") + "cose_scope=deepspaceag";
     var img = document.createElement("img"); img.className = "thumb"; img.alt = ""; img.loading = "lazy";
-    img.src = "https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/thumbs/" + id + ".svg?v=3";
+    img.src = "https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/thumbs/" + id + ".svg?v=4";
     img.onerror = function(){ img.remove(); };
     a.appendChild(img);
     var h = document.createElement("h3"); h.textContent = (it.emoji ? it.emoji + " " : "") + it.title; a.appendChild(h);
