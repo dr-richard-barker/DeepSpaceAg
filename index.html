@@ -27,6 +27,69 @@
   .subsec > h2{font-size:1.16rem;letter-spacing:-.01em;margin:0;display:flex;align-items:baseline;gap:10px}
   .subsec > h2 .n{font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.02em}
   .subsec > .blurb{margin:5px 0 0;color:var(--muted);font-size:.9rem;line-height:1.45}
+
+  /* CYOA Adventure Console Styling */
+  .adventure-console {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0 30px;
+    font-family: var(--mono, monospace);
+  }
+  .console-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .console-text {
+    margin: 0;
+    font-size: 0.94rem;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  .console-text span.blink {
+    color: var(--accent);
+    animation: console-blink 1s infinite;
+    font-weight: bold;
+  }
+  @keyframes console-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .console-choices {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 600px) {
+    .console-choices {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .console-choice-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+  }
+  .console-choice-btn:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb, 47, 143, 95), 0.05);
+    transform: translateY(-1px);
+  }
+  .console-choice-btn .icon {
+    font-size: 1.1rem;
+  }
 </style>
 </head>
 <body data-site-id="deepspaceag" data-brand-logo="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-logo.png">
@@ -46,6 +109,20 @@
 </header>
 
 <section>
+  <div class="wrap">
+    <!-- Choose Your Own Adventure Console -->
+    <div class="adventure-console">
+      <div class="console-body">
+        <p class="console-text"><span class="blink">&gt;</span> You enter the Deep Space Agriculture engineering center. High-fidelity CFD models solve gas flow across virtual leaves. How will you engineer deep space cultivation?</p>
+        <div class="console-choices">
+          <a href="#plant-systems-crops" class="console-choice-btn"><span class="icon">🍃</span> Path A: Analyze CFD airflow models and gas transport systems</a>
+          <a href="#planetary-environment" class="console-choice-btn"><span class="icon">🪐</span> Path B: Examine magnetic field biology and planetary viz</a>
+          <a href="#stress-biomarker-decoders" class="console-choice-btn"><span class="icon">🧬</span> Path C: Load machine-learning seed and radiation stress decoders</a>
+          <a href="#astronaut-health" class="console-choice-btn"><span class="icon">🩺</span> Path D: Monitor astronaut bone density and crew nutrition dashboards</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="wrap" id="hub"></div>
 </section>
 
@@ -91,6 +168,7 @@
     var cards = sec.ids.map(card).filter(Boolean);
     if(!cards.length) return;
     var wrap = document.createElement("div"); wrap.className = "subsec";
+    wrap.id = sec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     var h = document.createElement("h2");
     h.appendChild(document.createTextNode(sec.name));
     var n = document.createElement("span"); n.className = "n"; n.textContent = cards.length + (cards.length===1?" project":" projects");
