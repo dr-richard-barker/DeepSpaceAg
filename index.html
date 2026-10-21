@@ -118,7 +118,7 @@
           <a href="#plant-systems-crops" class="console-choice-btn"><span class="icon">🍃</span> Path A: Analyze CFD airflow models and gas transport systems</a>
           <a href="#planetary-environment" class="console-choice-btn"><span class="icon">🪐</span> Path B: Examine magnetic field biology and planetary viz</a>
           <a href="#stress-biomarker-decoders" class="console-choice-btn"><span class="icon">🧬</span> Path C: Load machine-learning seed and radiation stress decoders</a>
-          <a href="#astronaut-health" class="console-choice-btn"><span class="icon">🩺</span> Path D: Monitor astronaut bone density and crew nutrition dashboards</a>
+          <a href="https://dr-richard-barker.github.io/AstronautHealth/" class="console-choice-btn"><span class="icon">🩺</span> Path D: Monitor astronaut bone density and crew nutrition dashboards</a>
         </div>
       </div>
     </div>
@@ -129,7 +129,8 @@
 <footer>
   <div class="wrap">
     <p>Deep Space Agriculture · part of the <a href="https://cosecloud.com/">COSE</a> project family ·
-    <a href="https://dr-richard-barker.github.io/CoSE_Cloud/Hub/">full project hub</a><br>
+    <a href="https://dr-richard-barker.github.io/CoSE_Cloud/Hub/">full project hub</a> ·
+    <a href="https://dr-richard-barker.github.io/">Richard Barker · home</a><br>
     Richard Barker and collaborators.</p>
   </div>
 </footer>
@@ -153,7 +154,10 @@
   reg.groups.forEach(function(g){ g.items.forEach(function(it){ byId[it.id] = it; }); });
   function card(id){
     var it = byId[id]; if(!it || !it.url) return null;
-    var a = document.createElement("a"); a.className = "hubcard"; a.href = it.url + (it.url.indexOf("?")>=0?"&":"?") + "cose_scope=" + SCOPE;
+    var a = document.createElement("a"); a.className = "hubcard";
+    var u = it.url, h = u.indexOf("#"), frag = h >= 0 ? u.slice(h) : "";   // keep any #fragment last
+    if(h >= 0) u = u.slice(0, h);
+    a.href = u + (u.indexOf("?")>=0?"&":"?") + "cose_scope=" + SCOPE + frag;
     var img = document.createElement("img"); img.className = "thumb"; img.alt = ""; img.loading = "lazy";
     var ext = it.thumb_ext || "svg";
     img.src = "https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/thumbs/" + id + "." + ext + "?v=4";
